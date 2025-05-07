@@ -25,11 +25,11 @@
 		top: 0;
 		left: 0;
 		/* inset: 0; */
-		background-image: url("images/bg-desktop-dark.jpg"), linear-gradient(to bottom, var(--background-color));
+		background-image: var(--background-img), linear-gradient(to bottom, var(--background-color));
 		background-repeat: no-repeat, no-repeat;
 		object-fit: cover;
 		background-position: top, top;
-		background-size: 100% 25%, 100% 100%;
+		background-size: 100% auto, 100% 100%;
 	}
 
 	.container {
@@ -41,8 +41,8 @@
 		.wrapper {
 			display: grid;
 			margin: 0 auto;
-			max-width: 440px;
-			min-height: 200px;
+			max-width: 480px;
+			/* min-height: 200px; */
 			grid-template-rows: 1.5fr 1fr 12px auto 1fr;
 			/* grid-template-columns: repeat(3, 1fr); */
 			/* border: 1px solid black; */

@@ -1,16 +1,10 @@
 <script lang="ts">
+	let { handleSubmit, text, id } = $props()
 </script>
 
-{#snippet checkmark()}
-	<svg xmlns="http://www.w3.org/2000/svg" width="11" height="9"
-		><path fill="none" stroke="#FFF" stroke-width="2" d="M1 4.304L3.696 7l6-6" /></svg
-	>
-{/snippet}
-
-<form class="flex w-full flex-row items-center justify-start">
+<form class="flex w-full flex-row items-center justify-start" onsubmit={(e)=>handleSubmit(e, id)}>
 	<input type="checkbox" />
-	<!-- {@render checkmark()}<input> -->
-	<input type="text" placeholder="Create a new todo..." />
+	<input type="text" value={text} placeholder="Create a new todo..." />
 </form>
 
 <style>

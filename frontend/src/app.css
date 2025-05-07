@@ -28,21 +28,34 @@
     /* dark theme is default */
     --text-primary: var(--light-grayish-blue);
     --text-secondary: var(--dark-grayish-blue);
-    --button-primary: var(--dark-grayish-blue);
-    --button-hover: var(--light-grayish-blue-hover);
-    --outline:  var(--very-dark-grayish-blue);
+    --button-primary: var(--very-dark-grayish-blue);
+    --button-hover: var(--very-light-grayish-blue);
+    --button-current: var(--light-grayish-blue-hover);
+    --outline:  var(--very-dark-grayish-blue-alt);
     --surface-1: var(--very-dark-desaturated-blue);
     --surface-2: var(--very-dark-blue);
     --background-color: var(--very-dark-blue);
+    --background-img: url("images/bg-desktop-dark.jpg");
 }
 
 [data-theme="light"]{
-     /* light theme Colors */
-
+    /* --background-gradient-1: hsl(280, 87%, 65%);
+    --background-gradient-2:hsl(192, 100%, 67%); */
+    /* light theme Colors */
+    --text-primary: var(--very-dark-grayish-blue-alt);
+    --text-secondary: var(--dark-grayish-blue);
+    --button-primary: var(--dark-grayish-blue);
+    --button-hover: var(--very-dark-desaturated-blue);
+    --button-current: var(--light-grayish-blue-hover);
+    --outline:  var(--very-dark-grayish-blue);
+    --surface-1: var(--very-light-grayish-blue);
+    --surface-2: var(--very-dark-blue);
+    --background-color: var(--very-light-gray);
+    --background-img: url("images/bg-desktop-light.jpg");
 }
 
 /* for completed todos */
-.updated{
+.completed{
     text-decoration: line-through;
     color: var(--text-secondary)
 }
@@ -116,7 +129,7 @@ input[type='checkbox'] {
     }
 
     .list-wrapper{
-        @apply row-start-4 row-end-4 rounded-t-md
+        @apply row-start-4 row-end-4 rounded-t-md 
     }
 
     .actions{

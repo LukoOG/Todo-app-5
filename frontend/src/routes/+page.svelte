@@ -4,8 +4,9 @@
 	type Todo = {
 		id: number;
 		text: string;
-		updated: boolean;
+		completed: boolean;
 	};
+	type todoState = "active" | "all" | "completed"
 
 	type Theme = "dark" | "light"
 	let theme: Theme = $state("dark")
@@ -13,9 +14,67 @@
 	import Form from '../components/Form.svelte';
 
 	let todos = $state<Todo[]>(data.todos);
-	$inspect(todos, theme);
+	let todostate = $state<todoState>("all")
+	
+	let filteredTodos = $derived.by(() => {
+		switch (todostate){
+			case "all":
+				return todos
+			case 'active':
+				return todos.filter((todo)=>todo.completed === false)
+			case 'completed':
+				return todos.filter((todo)=>todo.completed === true)
+		}
 
-	let filteredTodos = $derived(todos)
+	})
+
+	let editing = $state({})
+	const handleSubmit = (e: Event, id:number) => {
+		e.preventDefault()
+		let inputEl = e.target.elements[1] as HTMLInputElement
+		if(!id){
+			addTodo(inputEl.value)
+			inputEl.value = ""
+		} else if(id){
+			editTodo(id, inputEl.value)
+			inputEl.value = ""
+			editing = {}
+		}
+
+	}
+
+	const addTodo = (value: string) => {
+		let newTodo: Todo = {
+			id: Math.random(), //will change on the backend
+			text: value,
+			completed: false,
+		}
+		todos.push(newTodo)
+		todostate="all"
+	}
+
+	const removeTodo = (id: number) => {
+		todos = todos.filter((todo)=>todo.id !== id)
+	}
+
+	const editTodo = (id: number, text: string) => {
+		todos = todos.map((todo)=>{
+			if (todo.id == id){
+				todo.text = text
+			}
+			return todo
+		})
+	}
+
+	const clearCompleted = () => {
+		todos = todos.filter((todo)=>todo.completed == false)
+	}
+
+	const toggleTheme = () => {
+		theme = theme == "dark" ? "light" : "dark"
+		document.body.setAttribute('data-theme', theme)
+	}
+	$inspect(filteredTodos)
 </script>
 
 {#snippet toggle(theme: Theme)}
@@ -32,37 +91,59 @@
 		TODO
 	</h2>
 
-	<button onclick={() => theme = theme === "dark" ? "light" : "dark"}>
+	<button onclick={toggleTheme}>
 		{@render toggle(theme)}
 	</button>
  </header>
 
 <div class="form-wrapper">
-	<Form />
+	<Form { handleSubmit } {...editing} />
 </div>
 
 <div class="empty-space"></div>
 
 	<ul  class="list-wrapper w-full">
-		{#each todos as { id, text, updated }, i (id)}
-			<li class={['todo-item', { updated }]}>
-				<input type="checkbox" bind:checked={todos[i].updated} />
-				<span class="ml-[1em] w-[90%] cursor-pointer">{text}</span>
+		{#each filteredTodos as { id, text, completed }, i (id)}
+			<li class={['todo-item', { completed }]}>
+				<input type="checkbox" bind:checked={filteredTodos[i].completed} />
+				<!-- ignore velte(a11y_click_events_have_key_events) -->
+				<!-- ignore svelte(a11y_no_static_element_interactions) -->
+				<span onclick={()=>editing={id, text}} class="ml-[1em] w-[90%] cursor-pointer">{text}</span>
+				<!-- <input class="ml-[1em] w-[90%] cursor-pointer" value={text}  readonly> -->
+				<button onclick={()=>removeTodo(id)}>
+					<!--ignore svelte(a11y_consider_explicit_label) -->
+					<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path fill="#494C6B" fill-rule="evenodd" d="M16.97 0l.708.707L9.546 8.84l8.132 8.132-.707.707-8.132-8.132-8.132 8.132L0 16.97l8.132-8.132L0 .707.707 0 8.84 8.132 16.971 0z"/></svg>
+				</button>
 			</li>
 		{/each}
 	</ul>
 
 
 <div class="actions">
-	<p>{filteredTodos.length} items left</p>
+	{#snippet completed()}
+		{@const length = filteredTodos.filter((todo)=>todo.completed==false).length}
+		{@const completed = filteredTodos.filter((todo)=>todo.completed==true).length}
+		{@const state = todostate}
+		{#if state !== 'completed'}
+			<p>{length} { length == 1 ? "item" : "items" } left</p>
+		{:else if state == 'completed'}
+			<p class=''>{completed} { completed == 1 ? "item" : "items" } completed</p>
+		{/if}
+	{/snippet}
+
+	{@render completed()}
+
+	
 
 	<div class="filters">
-		<button>All</button>
-		<button>Active</button>
-		<button>Completed</button>
+		{#each ["all", "active", "completed"] as state }
+		{@const capitalWord = state.charAt(0).toUpperCase() + state.slice(1) }
+		{@const current =  state == todostate ? "page" : undefined}
+			<button aria-current={current} onclick={()=>todostate =  state as todoState }>{ capitalWord }</button>
+		{/each}
 	</div>
 
-	<button> Clear completed </button>
+	<button onclick={clearCompleted}> Clear completed </button>
 </div>
 
 <style>
@@ -72,7 +153,7 @@
 		justify-content: space-around;
 		margin: 0 auto;
 		width: 70%;
-		flex-basis: content;
+		flex-basis:auto;
 	}
 
 	.header-wrapper{
@@ -81,7 +162,10 @@
 		flex-direction: row;
 		justify-content: space-between;
 		font-size: 32px;
-		/* align-items: flex-start; iinvestigate why it only works on the svg*/
+		/* align-items: flex-start; investigate why it only works on the svg*/
+		align-items: center;
+		color: var(--text-primary);
+		font-weight: 600px;
 		
 	}
 
@@ -95,14 +179,19 @@
 	.actions {
 		&:not(.header-wrapper){
 			background-color: var(--surface-1);
+			color: var(--text-secondary);
 		}
 		/* padding: 0.5em 1em; */
-		color: var(--text-primary);
 		font-weight: var(--light);
 		button{
+			color: var(--button-primary);
 			&:hover{
-				color: var(--bright-blue);
+				color: var(--button-hover);
 				cursor: pointer;
+			}
+			&[aria-current="page"]{
+				color: var(--bright-blue);
+
 			}
 		}
 	}
