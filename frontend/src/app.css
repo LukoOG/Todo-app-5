@@ -48,9 +48,9 @@
     --button-hover: var(--very-dark-desaturated-blue);
     --button-current: var(--light-grayish-blue-hover);
     --outline:  var(--very-dark-grayish-blue);
-    --surface-1: var(--very-light-grayish-blue);
+    --surface-1: var(--very-light-gray);
     --surface-2: var(--very-dark-blue);
-    --background-color: var(--very-light-gray);
+    --background-color: var(--very-light-grayish-blue);
     --background-img: url("images/bg-desktop-light.jpg");
 }
 

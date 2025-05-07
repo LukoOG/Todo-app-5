@@ -164,7 +164,7 @@
 		font-size: 32px;
 		/* align-items: flex-start; investigate why it only works on the svg*/
 		align-items: center;
-		color: var(--text-primary);
+		color: var(--very-light-gray);
 		font-weight: 600px;
 		
 	}
@@ -181,8 +181,11 @@
 			background-color: var(--surface-1);
 			color: var(--text-secondary);
 		}
+
+		&:not(.list-wrapper){
+			font-weight: 600;
+		}
 		/* padding: 0.5em 1em; */
-		font-weight: var(--light);
 		button{
 			color: var(--button-primary);
 			&:hover{
