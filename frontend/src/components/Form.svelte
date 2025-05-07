@@ -10,30 +10,11 @@
 <form class="flex w-full flex-row items-center justify-start">
 	<input type="checkbox" />
 	<!-- {@render checkmark()}<input> -->
-	<input type="text" placeholder="Create a new todo" />
+	<input type="text" placeholder="Create a new todo..." />
 </form>
 
 <style>
 	/* make the input styles global later */
-	input[type='text'] {
-		outline: none;
-		border: none;
-		text-decoration: none;
-		background: none;
-		width: 90%;
-		margin-left: 1em;
-		/* padding: 0; */
-		&:focus {
-			border: none;
-			outline: none;
-		}
-	}
-
-	input[type='checkbox'] {
-		background: none;
-		border: none;
-		border-radius: 100%;
-	}
 
 	/* label {
         
