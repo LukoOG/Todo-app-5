@@ -35,7 +35,7 @@
     --surface-1: var(--very-dark-desaturated-blue);
     --surface-2: var(--very-dark-blue);
     --background-color: var(--very-dark-blue);
-    --background-img: url("images/bg-desktop-dark.jpg");
+    --background-img: url("/images/bg-desktop-dark.jpg");
 }
 
 [data-theme="light"]{
@@ -51,7 +51,7 @@
     --surface-1: var(--very-light-gray);
     --surface-2: var(--very-dark-blue);
     --background-color: var(--very-light-grayish-blue);
-    --background-img: url("images/bg-desktop-light.jpg");
+    --background-img: url("/images/bg-desktop-light.jpg");
 }
 
 /* for completed todos */

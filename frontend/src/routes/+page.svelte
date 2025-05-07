@@ -12,8 +12,13 @@
 	let theme: Theme = $state("dark")
 
 	import Form from '../components/Form.svelte';
-
-	let todos = $state<Todo[]>(data.todos);
+	// will hook up backend soon
+	// let todos = $state<Todo[]>(data.todos);
+	let todos =$state<Todo[]>([
+		{ id: 188, text: 'get into Caltech', completed: true },
+		{ id: 189, text: 'go eat some pizza', completed: true },
+		{ id: 193, text: 'migrate to svelte-5', completed: false }
+	])
 	let todostate = $state<todoState>("all")
 	
 	let filteredTodos = $derived.by(() => {

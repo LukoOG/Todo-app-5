@@ -8,6 +8,11 @@
 	// }
 </script>
 
+<svelte:head>
+	<title>
+		Todo app by Sdev
+	</title>
+</svelte:head>
 <!-- set the proper colors after  -->
 <div class="container">
 	<div class="wrapper">
