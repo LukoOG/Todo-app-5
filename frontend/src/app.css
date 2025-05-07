@@ -105,7 +105,7 @@ input[type='checkbox'] {
     }
 
     &:checked::before{
-        content: url("images/icon-check.svg");
+        content: url("/images/icon-check.svg");
         position: absolute;
         top: 50%;
         left: 50%;
