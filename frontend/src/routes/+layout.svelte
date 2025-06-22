@@ -10,7 +10,7 @@
 
 <svelte:head>
 	<title>
-		Todo app by Sdev
+		Todo app by Sipedev
 	</title>
 </svelte:head>
 <!-- set the proper colors after  -->
