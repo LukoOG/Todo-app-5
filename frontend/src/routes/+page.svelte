@@ -49,6 +49,7 @@
 	}
 
 	const addTodo = (value: string) => {
+		if(!value) return;
 		let newTodo: Todo = {
 			id: Math.random(), //will change on the backend
 			text: value,
